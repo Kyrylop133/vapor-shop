@@ -10,6 +10,28 @@ public class User  {
     @Id
     private Integer id;
     private String email;
+    private String role;
+
+    public User() {
+    }
+
+    public User(Integer id, String email) {
+        this.id = id;
+        this.email = email;
+    }
+    public User(User user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.role=user.getRole();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Integer getId() {
         return id;
