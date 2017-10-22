@@ -20,6 +20,16 @@ public class User  {
 
     public User() {
     }
+    public User(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+        this.dateOfBirthday = user.getDateOfBirthday();
+        this.mobileNumber = user.getMobileNumber();
+        this.address = user.getAddress();
+        this.email = user.getEmail();
+        this.role = user.getRole();
+    }
 
     public User(Integer id, String firstName, String secondName, String dateOfBirthday, String mobileNumber, Address address, String email, String role) {
         this.id = id;

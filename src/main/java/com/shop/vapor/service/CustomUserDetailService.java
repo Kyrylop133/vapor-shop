@@ -41,7 +41,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return "123";
+            return getPassword();
         }
 
         @Override
@@ -68,6 +68,7 @@ public class CustomUserDetailService implements UserDetailsService {
         public boolean isEnabled() {
             return true;
         }
+
         class Role implements GrantedAuthority{
             private String role;
 
