@@ -3,14 +3,14 @@ package com.shop.vapor.persistance.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "orders")
 public class Order {
     @Id
     private int id;
     private String date;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
     private List<Product> products;
 
     public Order() {
