@@ -1,23 +1,23 @@
 package com.shop.vapor.persistance.entity;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 
-public class Orders {
+@Entity
+public class Order {
+    @Id
     private int id;
     private String date;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY)
-    private Products products;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<Product> products;
 
-    public Orders(){
+    public Order() {
 
     }
 
-    public Orders(int id, String date, User user, Products products) {
+    public Order(int id, String date, User user, List<Product> products) {
         this.id = id;
         this.date = date;
         this.user = user;
@@ -47,12 +47,11 @@ public class Orders {
     public void setUser(User user) {
         this.user = user;
     }
-
-    public Products getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Products products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
@@ -61,26 +60,26 @@ public class Orders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Orders orders = (Orders) o;
+        Order Order = (Order) o;
 
-        if (id != orders.id) return false;
-        if (!date.equals(orders.date)) return false;
-        if (!user.equals(orders.user)) return false;
-        return products.equals(orders.products);
+        if (id != Order.id) return false;
+        if (date != null ? !date.equals(Order.date) : Order.date != null) return false;
+        if (user != null ? !user.equals(Order.user) : Order.user != null) return false;
+        return products != null ? products.equals(Order.products) : Order.products == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + date.hashCode();
-        result = 31 * result + user.hashCode();
-        result = 31 * result + products.hashCode();
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (products != null ? products.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Orders{" +
+        return "Order{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", user=" + user +

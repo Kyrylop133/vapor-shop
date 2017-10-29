@@ -1,7 +1,7 @@
 package com.shop.vapor.persistance.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 public class User  {
@@ -15,8 +15,8 @@ public class User  {
     private Address address;
     private String email;
     private String role;
-    @OneToMany(fetch = FetchType.LAZY)
-    private Orders orders;
+    @OneToMany(fetch = FetchType.LAZY , mappedBy = "user")
+    private List<Order> orders;
 
     public User() {
     }
@@ -29,7 +29,10 @@ public class User  {
         this.address = user.getAddress();
         this.email = user.getEmail();
         this.role = user.getRole();
+        this.orders = user.getOrders();
     }
+
+
 
     public User(Integer id, String firstName, String secondName, String dateOfBirthday, String mobileNumber, Address address, String email, String role) {
         this.id = id;
@@ -40,6 +43,14 @@ public class User  {
         this.address = address;
         this.email = email;
         this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public Integer getId() {
@@ -113,26 +124,29 @@ public class User  {
 
         User user = (User) o;
 
-        if (!id.equals(user.id)) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        if (!secondName.equals(user.secondName)) return false;
-        if (!dateOfBirthday.equals(user.dateOfBirthday)) return false;
-        if (!mobileNumber.equals(user.mobileNumber)) return false;
-        if (!address.equals(user.address)) return false;
-        if (!email.equals(user.email)) return false;
-        return role.equals(user.role);
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (secondName != null ? !secondName.equals(user.secondName) : user.secondName != null) return false;
+        if (dateOfBirthday != null ? !dateOfBirthday.equals(user.dateOfBirthday) : user.dateOfBirthday != null)
+            return false;
+        if (mobileNumber != null ? !mobileNumber.equals(user.mobileNumber) : user.mobileNumber != null) return false;
+        if (address != null ? !address.equals(user.address) : user.address != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        return orders != null ? orders.equals(user.orders) : user.orders == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + secondName.hashCode();
-        result = 31 * result + dateOfBirthday.hashCode();
-        result = 31 * result + mobileNumber.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + role.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
+        result = 31 * result + (dateOfBirthday != null ? dateOfBirthday.hashCode() : 0);
+        result = 31 * result + (mobileNumber != null ? mobileNumber.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (orders != null ? orders.hashCode() : 0);
         return result;
     }
 
@@ -147,6 +161,7 @@ public class User  {
                 ", address=" + address +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
+                ", orders=" + orders +
                 '}';
     }
 }

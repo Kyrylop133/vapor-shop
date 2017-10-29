@@ -1,25 +1,29 @@
 package com.shop.vapor.persistance.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-public class Products {
+@Entity
+public class Product {
+    @Id
     private int id;
     private String productName;
     private String productDescribe;
     private int price;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Orders orders;
+    private Order order;
 
-    public Products(){
+    public Product(){
     }
 
-    public Products(int id, String productName, String productDescribe, int price, Orders orders) {
+    public Product(int id, String productName, String productDescribe, int price, Order order) {
         this.id = id;
         this.productName = productName;
         this.productDescribe = productDescribe;
         this.price = price;
-        this.orders = orders;
+        this.order = order;
     }
 
     public int getId() {
@@ -54,12 +58,12 @@ public class Products {
         this.price = price;
     }
 
-    public Orders getOrders() {
-        return orders;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrders(Orders orders) {
-        this.orders = orders;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override
@@ -67,33 +71,34 @@ public class Products {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Products products = (Products) o;
+        Product product = (Product) o;
 
-        if (id != products.id) return false;
-        if (price != products.price) return false;
-        if (!productName.equals(products.productName)) return false;
-        if (!productDescribe.equals(products.productDescribe)) return false;
-        return orders.equals(products.orders);
+        if (id != product.id) return false;
+        if (price != product.price) return false;
+        if (productName != null ? !productName.equals(product.productName) : product.productName != null) return false;
+        if (productDescribe != null ? !productDescribe.equals(product.productDescribe) : product.productDescribe != null)
+            return false;
+        return order != null ? order.equals(product.order) : product.order == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + productName.hashCode();
-        result = 31 * result + productDescribe.hashCode();
+        result = 31 * result + (productName != null ? productName.hashCode() : 0);
+        result = 31 * result + (productDescribe != null ? productDescribe.hashCode() : 0);
         result = 31 * result + price;
-        result = 31 * result + orders.hashCode();
+        result = 31 * result + (order != null ? order.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Products{" +
+        return "Product{" +
                 "id=" + id +
                 ", productName='" + productName + '\'' +
                 ", productDescribe='" + productDescribe + '\'' +
                 ", price=" + price +
-                ", orders=" + orders +
+                ", order=" + order +
                 '}';
     }
 }
